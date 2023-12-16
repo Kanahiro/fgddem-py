@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "fgddem-py"
+version = "0.1.0"
+description = "convert FGD-DEM to GeoTIFF"
+authors = ["Kanahiro <mediterranean1769@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "fgddem"}]
+
+[tool.poetry.scripts]
+fgddem = "fgddem.__main__:main"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+rasterio = "^1.3.9"
+numpy = "^1.26.2"
+lxml = "^4.9.3"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.1.8"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
