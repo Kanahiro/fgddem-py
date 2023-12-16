@@ -99,6 +99,7 @@ def process_xml(xml_file: str, output_dir: str):
         nodata=-9999.0,
         dtype=grids.dtype,
         crs="EPSG:6668",
+        compress="lzw",
         transform=rasterio.transform.from_bounds(
             min_lon,
             min_lat,
