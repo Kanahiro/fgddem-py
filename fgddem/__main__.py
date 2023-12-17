@@ -34,11 +34,9 @@ def parse_arg():
     tmpdir = tempfile.mkdtemp(dir=".")  # ZIPファイルを展開したときの一時ディレクトリ、後で消す
     xml_files = []
     if args.input_path.endswith(".zip"):
-        # extract xml files on memory
         xml_files = extract_zip(args.input_path, tmpdir)
 
     elif os.path.isdir(args.input_path):
-        # xml or zip
         for f in os.listdir(args.input_path):
             if f.endswith(".xml"):
                 xml_files.append(os.path.join(args.input_path, f))
@@ -77,9 +75,11 @@ def process_xml(xml_file: str, output_dir: str):
     output_width = width - dx
     output_height = height - dy
 
-    # find DEM
-    dem = tree.find("//gml:tupleList", namespaces=root.nsmap)
-    values = list(map(lambda s: round(float(s.split(",")[1]), 2), dem.text.split()))
+    # グリッドデータの値を取得
+    gml_tuplelist = tree.find("//gml:tupleList", namespaces=root.nsmap)
+    values = list(
+        map(lambda s: round(float(s.split(",")[1]), 2), gml_tuplelist.text.split())
+    )
 
     if len(values) != output_width * output_height:
         print(f"invalid fgddem data, skip...: {xml_file}")
